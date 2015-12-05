@@ -266,3 +266,57 @@ main =
 ---
 
 ![fit](hello_elm_debugger_2.png)
+
+---
+
+# Covered so far
+
+- Elm Reactor
+- Importing
+- Basic functions
+- Function Signatures
+- Signals
+- Let Expressions
+- Debugger
+
+---
+
+# Bonus: Prettier dates
+
+```sh
+elm package install mgold/elm-date-format
+```
+
+---
+
+```haskell
+import Date
+import Date.Format exposing (format)
+import Debug
+import Html exposing (..)
+import Time
+
+-- View
+
+view : Float -> String -> Html
+view time message =
+  let
+    _ = Debug.watch "raw time is" time
+    full_message = message ++ format "%A %H:%m:%S" (Date.fromTime time)
+    _ = Debug.watch "full_message is" full_message
+  in
+    h1 [] [ text full_message ]
+
+main : Signal Html
+main =
+  Signal.map2 view (Time.every Time.second) (Signal.constant "Hello: ")
+```
+
+---
+
+# Counter
+
+First part of the Elm Architecture Tutorial covers counters, so we're gonna create one. Getting there...
+
+---
+
