@@ -221,7 +221,15 @@ main =
 
 ---
 
-# TODO Signals
+![fit](images/Signal 0.png)
+
+---
+
+![fit](images/Signal 1.png)
+
+---
+
+![fit](images/Signal 2.png)
 
 ---
 
