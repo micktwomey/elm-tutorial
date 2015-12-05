@@ -19,8 +19,10 @@ https://github.com/evancz/elm-architecture-tutorial
 # [fit] Why Elm?
 
 ^ Aimed squarely at frontend web development (HTML, Canvas and WebGL)
+^ React js is borrowing ideas from Elm
 ^ Gateway language to functional programming
 ^ Fun! First language I'm really excited about since I discovered Python
+^ Not Javascript!
 
 ---
 
@@ -96,6 +98,8 @@ $ elm repl
 > {x = 1, y = 2}
 { x = 1, y = 2 } : { x : number, y : number' }
 ```
+
+^ I don't actually use the REPL a huge amount, I find the compiler generally more helpful
 
 --- 
 
@@ -278,6 +282,7 @@ main =
 - Signals
 - Let Expressions
 - Debugger
+- "Views"
 
 ---
 
@@ -318,5 +323,167 @@ main =
 
 First part of the Elm Architecture Tutorial covers counters, so we're gonna create one. Getting there...
 
+```sh
+cd ..
+mkdir counter
+cd counter
+elm package install evancz/elm-html 
+elm package install evancz/start-app
+atom .
+touch Counter.elm Main.elm
+elm reactor
+```
+
 ---
 
+# Counter.elm
+
+```haskell
+module Counter where
+
+-- Model
+
+type alias Model = Int
+```
+
+^ Ooh, a Model
+^ Simplest possible model, a number
+^ Declaring a module (for re-using)
+
+---
+
+```haskell
+module Counter where
+import Html exposing (..)
+import Html.Attributes exposing (style)
+
+-- Model
+type alias Model = Int
+
+-- Views
+view : Model -> Html
+view model =
+  div []
+    [ button [] [ text "-" ]
+    , div [ style [("font-size", "20px")] ] [ text (toString model) ]
+    , button [] [ text "+" ]
+    ]
+
+main : Html
+main =
+  view 0
+```
+
+^ A model and a view, we pass the model in and get Html back
+^ Most basic part of Elm's patterns
+
+---
+
+```haskell
+-- View
+countStyle : Attribute
+countStyle =
+  style
+    [ ("font-size", "20px")
+    , ("font-family", "monospace")
+    , ("display", "inline-block")
+    , ("width", "50px")
+    , ("text-align", "center")
+    ]
+
+view : Model -> Html
+view model =
+  div []
+    [ button [] [ text "-" ]
+    , div [ countStyle ] [ text (toString model) ]
+    , button [] [ text "+" ]
+    ]
+```
+
+^ Adding a countStyle function, looks nicer and closer to Elm tutorial
+
+---
+
+# Main.elm
+
+```haskell
+import Counter exposing (update, view)
+
+import Html exposing (Html)
+import StartApp.Simple exposing (start)
+
+
+main : Signal Html
+main =
+  start
+    { model = 0
+    , update = update
+    , view = view
+    }
+```
+
+^ This pattern is baked into a package called startapp
+^ Model / Update / View pattern
+^ Core Elm pattern
+^ You'll get an error, we haven't implemented update yet
+
+---
+
+```haskell
+...
+-- Model
+type alias Model = Int
+
+-- Update
+type Action =
+  Increment
+  | Decrement
+
+update : Action -> Model -> Model
+update action model =
+  0
+
+-- View
+...
+-- Delete main : Html at end of file
+```
+
+^ Now Main should work (still doesn't do anything :))
+
+---
+
+```haskell
+...
+import Html.Attributes exposing (style)
+import Html.Events exposing (onClick)
+...
+update : Action -> Model -> Model
+update action model =
+  case action of
+    Increment ->
+      model + 1
+    Decrement ->
+      model - 1
+...
+view : Signal.Address Action -> Model -> Html
+view address model =
+  div []
+    [ button [ onClick address Decrement ] [ text "-" ]
+    , div [ countStyle ] [ text (toString model) ]
+    , button [ onClick address Increment ] [ text "+" ]
+    ]
+```
+
+---
+
+# Woo, a Counter!
+
+---
+
+# Elm Learning
+
+- http://elm-lang.org/docs
+- https://github.com/evancz/elm-architecture-tutorial/
+- http://package.elm-lang.org
+- https://pragmaticstudio.com/elm
+- https://pragmaticstudio.com/elm-signals
