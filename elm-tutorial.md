@@ -18,6 +18,12 @@ https://github.com/evancz/elm-architecture-tutorial
 
 # [fit] Why Elm?
 
+## [fit] Frontend
+## [fit] Functional
+## [fit] Fun!
+
+(Not Javascript!)
+
 ^ Aimed squarely at frontend web development (HTML, Canvas and WebGL)
 ^ React js is borrowing ideas from Elm
 ^ Gateway language to functional programming
