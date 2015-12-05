@@ -16,6 +16,14 @@ https://github.com/evancz/elm-architecture-tutorial
 
 ---
 
+# [fit] Why Elm?
+
+^ Aimed squarely at frontend web development (HTML, Canvas and WebGL)
+^ Gateway language to functional programming
+^ Fun! First language I'm really excited about since I discovered Python
+
+---
+
 # Setting Up
 
 ## (The boring bit)
@@ -112,13 +120,149 @@ If you go to http://localhost:8000 and click on Hello.elm you'll get a compiler 
 
 ```haskell
 import Html
--- import Html exposing (Html, h1, text)
--- import Html exposing (..)
 
 -- View
 main : Html.Html
 main =
-  -- Deliberate mistake
-  -- Html.h1 [] [ Html.text "Hello World" ]
+  -- Deliberate mistake here, to show off errors
   Html.h1 [] [ "Hello World" ]
+  -- Html.h1 [] [ Html.text "Hello World" ]
 ```
+
+^ Deliberate mistake here
+
+---
+
+![fit](hello_elm_atom_error.png)
+
+---
+
+```haskell
+import Html
+
+-- View
+main : Html.Html
+main =
+    Html.h1 [] [ Html.text "Hello World" ]
+```
+
+http://localhost:8000/Hello.elm
+
+^ Now we have a working program
+^ Note the -- View
+^ Namespaces
+^ Contracts (type declaration), try commenting it out
+
+---
+
+# Slightly less typing
+
+```haskell
+import Html exposing (..)
+
+-- View
+main : Html
+main =
+    h1 [] [ text "Hello World" ]
+```
+
+^ Change is the exposing (..)
+^ import X as Y exposing (Z)
+^ Found Elm quite smart about names, you can have a Message module and a Message type
+
+---
+
+# Functions
+
+```haskell
+import Html exposing (..)
+
+-- View
+view : String -> Html
+view message =
+  h1 [] [ text message ]
+
+main : Html
+main =
+  view "Hello World!"
+```
+
+^ While typing try saving, you should see errors when you change the function signature
+
+
+---
+
+```haskell
+import Html exposing (..)
+import Time
+
+-- View
+
+view : Float -> String -> Html
+view time message =
+  h1 [] [ text (message ++ toString time) ]
+
+main : Signal Html
+main =
+  Signal.map2 view (Time.every Time.second) (Signal.constant "Hello: ")
+```
+
+^ Getting more exciting, using Elm Signals
+
+---
+
+# TODO Signals
+
+---
+
+```haskell
+import Html exposing (..)
+import Time
+
+-- View
+
+view : Float -> String -> Html
+view time message =
+  let
+    full_message = message ++ toString time
+  in
+    h1 [] [ text full_message ]
+
+main : Signal Html
+main =
+  Signal.map2 view (Time.every Time.second) (Signal.constant "Hello: ")
+```
+
+^ Now using let expressions, makes code much more readable
+
+---
+
+```haskell
+import Debug
+import Html exposing (..)
+import Time
+
+-- View
+
+view : Float -> String -> Html
+view time message =
+  let
+    full_message = message ++ toString time
+    _ = Debug.watch "full_message is" full_message
+  in
+    h1 [] [ text full_message ]
+
+main : Signal Html
+main =
+  Signal.map2 view (Time.every Time.second) (Signal.constant "Hello: ")
+```
+
+^ Using let to add a debug watch
+
+---
+
+![fit](hello_elm_debugger_1.png)
+
+---
+
+![fit](hello_elm_debugger_2.png)
