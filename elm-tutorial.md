@@ -83,7 +83,7 @@ $ elm repl
 
 ---
 
-![fit](nb_elm_0.16.0.png)
+![fit](images/nb_elm_0.16.0.png)
 
 ^ Since the language is new and changing, it's quite important we all have the same (latest) version.
 ^ Bonus: the original 0.16.0 release had two bugs I know of, one cosmetic which affected the atom plugin error message formatting and one more serious which broke the debugger.
@@ -143,7 +143,7 @@ main =
 
 ---
 
-![fit](hello_elm_atom_error.png)
+![fit](images/hello_elm_atom_error.png)
 
 ---
 
@@ -271,11 +271,11 @@ main =
 
 ---
 
-![fit](hello_elm_debugger_1.png)
+![fit](images/hello_elm_debugger_1.png)
 
 ---
 
-![fit](hello_elm_debugger_2.png)
+![fit](images/hello_elm_debugger_2.png)
 
 ---
 
